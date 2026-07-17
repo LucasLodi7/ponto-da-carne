@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ponto da Carne</title>
+<meta name="description" content="Açougue Ponto da Carne — cortes selecionados para assar, em Marília. Peça pelo site e finalize direto no WhatsApp, com entrega ou retirada.">
+<link rel="icon" type="image/png" href="/images/logo.png">
+
+<!-- Compartilhamento em redes sociais e WhatsApp -->
+<!-- IMPORTANTE: troque a URL abaixo quando o domínio próprio (.com.br) estiver no ar -->
+<meta property="og:title" content="Ponto da Carne">
+<meta property="og:description" content="Cortes selecionados para assar, em Marília. Peça pelo site e finalize direto no WhatsApp.">
+<meta property="og:image" content="https://ponto-da-carne-production.up.railway.app/images/logo.png">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="grain"></div>
+
+<header>
+  <div class="header-inner">
+    <a href="#top" class="brand">
+      <img src="/images/logo.png" alt="Ponto da Carne">
+      <div class="brand-text">
+        <span class="name">Ponto da Carne</span>
+        <span class="tag" id="navTagline">Carnes Frescas</span>
+      </div>
+    </a>
+    <nav>
+      <a href="#cardapio">Cardápio</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#contato">Contato</a>
+    </nav>
+    <button class="mobile-menu-btn" onclick="toggleMobileNav()" id="mobileMenuBtn" aria-label="Abrir menu">☰</button>
+    <button class="cart-btn" onclick="openCart()">
+      🛒 Carrinho <span class="cart-count" id="cartCount">0</span>
+    </button>
+  </div>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#cardapio" onclick="closeMobileNav()">Cardápio</a>
+    <a href="#sobre" onclick="closeMobileNav()">Sobre</a>
+    <a href="#contato" onclick="closeMobileNav()">Contato</a>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <img class="hero-logo" src="/images/logo.png" alt="Ponto da Carne">
+  <div class="status-badge"><span class="status-dot" id="statusDot"></span><span id="statusText">verificando horário...</span></div>
+  <h1>Carne de <span>verdade</span>,<br>no ponto certo</h1>
+  <p class="sub">Cortes selecionados, açougueiro de confiança e o assado do jeito que precisa ser. Peça pelo site e finalize direto no WhatsApp.</p>
+  <div class="hero-actions">
+    <a href="#cardapio" class="btn-primary">Ver cardápio 🥩</a>
+    <a href="#contato" class="btn-secondary">Endereço e horários</a>
+  </div>
+  <div class="hero-meta">
+    <div><strong id="metaHours">—</strong>hoje</div>
+    <div><strong id="metaDelivery">Entrega e retirada</strong>como preferir</div>
+    <div><strong id="metaAddress">—</strong>endereço</div>
+  </div>
+</section>
+
+<section class="section" id="cardapio">
+  <div class="section-head">
+    <span class="eyebrow">Cardápio</span>
+    <h2>Escolha seus cortes</h2>
+  </div>
+  <div class="tabs" id="tabs"></div>
+  <div class="grid" id="grid"></div>
+</section>
+
+<section class="info-strip" id="sobre">
+  <div class="container info-grid">
+    <div class="info-item">
+      <span class="eyebrow">Sobre</span>
+      <p>Açougue de bairro comprometido com qualidade e atendimento próximo. Cortes bovinos, suínos, aves e embutidos selecionados diariamente — para o seu assado sair no ponto certo.</p>
+    </div>
+    <div class="info-item" id="contato">
+      <span class="eyebrow">Horário de funcionamento</span>
+      <p id="hoursList">carregando...</p>
+    </div>
+    <div class="info-item">
+      <span class="eyebrow">Contato</span>
+      <p><strong>Endereço:</strong> <a id="infoAddress" href="#" target="_blank" style="color:var(--flame);">—</a></p>
+      <p><strong>WhatsApp:</strong> <span id="infoWhats">—</span></p>
+      <p><strong>Instagram:</strong> <a id="infoInsta" href="#" target="_blank" style="color:var(--flame);">—</a></p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <a href="#top" class="brand"><img src="/images/logo.png" style="height:40px;width:40px;border-radius:8px;" alt=""><span class="brand-text"><span class="name" style="font-size:17px;">Ponto da Carne</span></span></a>
+  <div class="foot-links">
+    <a href="#cardapio">Cardápio</a>
+    <a href="#sobre">Sobre</a>
+    <a href="#contato">Contato</a>
+    <a id="footInsta" href="#" target="_blank">Instagram</a>
+  </div>
+  <p>© <span id="year"></span> Ponto da Carne. Todos os direitos reservados.</p>
+  <a href="#" class="admin-link" onclick="openAdmin();return false;">Área do dono</a>
+</footer>
+
+<!-- CART DRAWER -->
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+<div class="drawer" id="drawer">
+  <button class="close-drawer" onclick="closeCart()">✕</button>
+  <div class="drawer-head">
+    <span class="stamp">Pedido</span>
+    <h3>Sua comanda</h3>
+    <div id="closedNotice" class="closed-notice" style="display:none;">
+      ⏰ Estamos fechados agora, mas pode fazer seu pedido — vamos ver assim que abrirmos!
+    </div>
+  </div>
+  <div class="drawer-body" id="cartBody"></div>
+  <div class="drawer-foot" id="cartFoot" style="display:none;">
+    <div class="fulfill-toggle">
+      <button id="btnDelivery" onclick="setFulfillment('delivery')">🛵 Entrega</button>
+      <button id="btnPickup" onclick="setFulfillment('pickup')">🏪 Retirada</button>
+    </div>
+    <div id="deliveryFields">
+      <div class="field"><label>Endereço de entrega</label><input id="custAddress" placeholder="Rua, número, bairro"></div>
+    </div>
+    <div class="field"><label>Seu nome</label><input id="custName" placeholder="Nome completo"></div>
+    <div class="field"><label>Telefone (opcional)</label><input id="custPhone" placeholder="(00) 00000-0000"></div>
+    <div class="field"><label>Observações</label><textarea id="custNotes" placeholder="Ex: bife mais fino, sem osso, etc."></textarea></div>
+    <div class="total-row"><span>Subtotal</span><span id="sumSubtotal">R$ 0,00</span></div>
+    <div class="total-row" id="sumDeliveryRow"><span>Taxa de entrega</span><span id="sumDelivery">R$ 0,00</span></div>
+    <div class="total-row grand"><span>Total</span><span id="sumTotal">R$ 0,00</span></div>
+    <button class="wa-btn" onclick="sendWhatsApp()">📲 Finalizar pedido no WhatsApp</button>
+  </div>
+</div>
+
+<!-- ADMIN MODAL -->
+<div class="admin-modal" id="adminModal">
+  <div class="admin-box">
+    <button class="close-x" onclick="closeAdmin()">✕</button>
+
+    <div id="adminLogin" class="login-box">
+      <h3 style="margin-bottom:0;">Área do dono</h3>
+      <p style="color:var(--bone-dim);font-size:13px;">Digite a senha de administrador para gerenciar produtos e configurações.</p>
+      <input type="password" id="adminPass" placeholder="Senha">
+      <div class="btn-primary" style="width:100%;justify-content:center;" onclick="tryLogin()">Entrar</div>
+      <p style="font-size:11px;color:var(--bone-dim);margin-top:14px;" id="loginError"></p>
+    </div>
+
+    <div id="adminPanel" style="display:none;">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div>
+          <h3 style="margin:0 0 4px;">Painel do açougue</h3>
+          <p style="color:var(--bone-dim);font-size:13px;margin-top:0;margin-bottom:20px;">Alterações aqui aparecem para todos os clientes.</p>
+        </div>
+        <button onclick="logoutAdmin()" style="background:none;border:1px solid var(--line);color:var(--bone-dim);padding:8px 14px;border-radius:6px;font-size:12px;height:fit-content;">Sair</button>
+      </div>
+      <div class="admin-tabs">
+        <button class="active" onclick="showAdminTab('products')">Produtos</button>
+        <button onclick="showAdminTab('settings')">Configurações da loja</button>
+      </div>
+
+      <div class="admin-section active" id="admin-products">
+        <button class="add-new-btn" onclick="openProductForm()">+ Novo produto</button>
+        <div id="prodFormWrap"></div>
+        <div class="prod-list" id="prodList"></div>
+      </div>
+
+      <div class="admin-section" id="admin-settings">
+        <div class="admin-note">🔒 A senha fica protegida com hash (bcrypt) no banco de dados do servidor — nunca em texto puro. O login usa sessão segura com expiração automática em 8h e bloqueio após várias tentativas erradas.</div>
+        <div class="form-grid">
+          <div><label>Número do WhatsApp (só números, com DDI 55)</label><input id="setWhats" placeholder="5514999999999"></div>
+          <div><label>Instagram (usuário)</label><input id="setInsta" placeholder="pontoda.carnee"></div>
+          <div class="full"><label>Endereço</label><input id="setAddress" placeholder="Rua Exemplo, 123 - Centro"></div>
+          <div><label>Taxa de entrega (R$)</label><input id="setDeliveryFee" type="number" step="0.01"></div>
+          <div><label>Entrega grátis acima de (R$, 0 = nunca)</label><input id="setFreeThreshold" type="number" step="0.01"></div>
+          <div class="full"><label>Quarta a Sexta</label><input id="hoursWeek" placeholder="9h às 19h"></div>
+          <div><label>Sábado</label><input id="hoursSat" placeholder="9h às 18h"></div>
+          <div><label>Domingo</label><input id="hoursSun" placeholder="7h às 13h"></div>
+          <div class="full"><label>Nova senha de administrador (mínimo 6 caracteres)</label><input id="setAdminPass" placeholder="Deixe em branco para manter a atual" type="password"></div>
+        </div>
+        <button class="save-settings-btn" onclick="saveSettings()">Salvar configurações</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="/app.js"></script>
+</body>
+</html>
